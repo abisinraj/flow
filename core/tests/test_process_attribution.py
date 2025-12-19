@@ -2,6 +2,7 @@
 Unit tests for process attribution and whitelisting functionality.
 """
 import os
+import pytest
 import unittest
 from unittest.mock import patch, mock_open, MagicMock
 from core import settings_api
@@ -78,6 +79,7 @@ ESTAB  0  0  127.0.0.1:12345  8.8.8.8:80  users:(("chrome",pid=1234,fd=42))
         self.assertIsNone(name)
 
 
+@pytest.mark.django_db
 class TestProcessWhitelisting(unittest.TestCase):
     """Test process whitelist configuration and matching."""
 
@@ -132,6 +134,7 @@ class TestProcessWhitelisting(unittest.TestCase):
         self.assertEqual(result, [])
 
 
+@pytest.mark.django_db
 class TestAttributedAlertCreation(unittest.TestCase):
     """Test the create_attributed_alert wrapper."""
 
