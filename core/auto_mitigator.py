@@ -156,8 +156,6 @@ def evaluate_ip(ip: str) -> str:
         
         ok, msg = firewall.block_ip(ip, timeout_seconds=timeout)
         if ok:
-            # Audit log
-            BlockedIp.objects.create(ip=ip, reason=f"auto-score-{score}")
             return "blocked"
         else:
             log.error(f"Failed to block {ip}: {msg}")
@@ -181,7 +179,7 @@ def process_alert(alert: Alert):
     """
     try:
         # Global switch check
-        if not settings_api.firewall_allowed():
+        if not settings_api.auto_blocking_enabled():
             return
 
         src_ip = alert.src_ip
@@ -204,10 +202,6 @@ def process_alert(alert: Alert):
             alert.message = (alert.message or "") + explanation_text
             alert.save(update_fields=["message"])
             
-            BlockedIp.objects.create(
-                ip=src_ip, 
-                reason=f"policy-{alert.severity or 'medium'}"
-            )
             log.info(f"Blocked {src_ip} with explanation stored")
         else:
             log.error(f"Failed to block {src_ip}: {msg}")

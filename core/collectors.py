@@ -191,6 +191,29 @@ def start_connection_collector():
     t = threading.Thread(target=connection_collector_loop, daemon=True)
     t.start()
 
+
+def start_maintenance_thread():
+    """Starts a background thread for periodic maintenance tasks."""
+    t = threading.Thread(target=maintenance_loop, daemon=True)
+    t.start()
+
+
+def maintenance_loop(interval=60):
+    """
+    Loop that runs maintenance tasks every `interval` seconds.
+    """
+    from core.maintenance import run_all_maintenance
+    from django.db import close_old_connections
+
+    while True:
+        try:
+            run_all_maintenance()
+        except Exception as e:
+            log.warning("Maintenance task failed: %s", e)
+        finally:
+            close_old_connections()
+        time.sleep(interval)
+
 def parse_ss_output():
     """
     Run: ss -tnp state established
@@ -686,6 +709,12 @@ def start_collectors():
         start_connection_collector()
     except Exception:
         log.exception("Failed to start connection collector")
+
+    # Start periodic maintenance thread (cleanup expired blocks, etc.)
+    try:
+        start_maintenance_thread()
+    except Exception:
+        log.exception("Failed to start maintenance thread")
 
     # start light sniffer (reads /proc/net/tcp) for extra port scan hints
     if start_light_sniffer:
