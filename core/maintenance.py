@@ -28,6 +28,12 @@ def cleanup_expired_blocks():
         count = expired.count()
         
         for entry in expired:
+            # Check policy: even if time expired, don't unblock if active alerts exist
+            from core.unblock_policy import should_unblock_ip
+            if not should_unblock_ip(entry.ip):
+                log.info(f"Block for {entry.ip} expired but kept due to active alerts")
+                continue
+
             # Try to unblock (may already be expired in nftables)
             try:
                 firewall.unblock_ip(entry.ip)

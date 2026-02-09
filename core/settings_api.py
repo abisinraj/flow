@@ -61,6 +61,7 @@ DEFAULTS: Dict[str, str] = {
     "enable_raw_sniffer": "0",
     "reverse_shell_ports": "4444,5555,1337",
     "allow_firewall_actions": "0",
+    "enable_auto_blocking": "0",
 }
 
 _cache: Dict[str, str] = {}
@@ -187,6 +188,13 @@ def get_bool(key: str, default: bool = False) -> bool:
 
 def firewall_allowed() -> bool:
     return get_bool("allow_firewall_actions")
+
+
+def auto_blocking_enabled() -> bool:
+    """
+    Returns True if both firewall actions and auto-mitigation/blocking are enabled.
+    """
+    return firewall_allowed() and get_bool("enable_auto_blocking")
 
 
 def is_firewall_dry_run() -> bool:
