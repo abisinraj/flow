@@ -1585,7 +1585,7 @@
                 `;
             } else if (slideData.type === 'diagram') {
                 const diagramContent = slideData.image ? `
-                    <img src="${slideData.image}" class="max-w-full max-h-full object-contain relative z-20" style="filter: invert(1) brightness(1.2); opacity: 0.9;">
+                    <img src="${slideData.image}" class="max-w-full max-h-[65vh] object-contain relative z-20" style="filter: invert(1) brightness(1.2); opacity: 0.9;">
                 ` : `
                     <div class="text-gray-500 mono text-sm relative z-20 flex flex-col items-center">
                         <span class="material-symbols-outlined text-6xl mb-4">architecture</span>
@@ -1595,7 +1595,7 @@
 
                 return `
                     <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none"></div>
-                        <div class="z-10 w-full max-w-7xl h-full flex flex-col pt-12">
+                        <div class="z-10 w-full max-w-7xl flex flex-col">
                             <div class="flex justify-between items-end border-b border-white pb-4 mb-8 slide-header">
                                 <h2 class="text-5xl font-bold uppercase tracking-tight">${slideData.title}</h2>
                                 <span class="mono text-sm">[ DIAGRAM_MODE ]</span>
