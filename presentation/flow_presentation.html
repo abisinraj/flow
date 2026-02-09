@@ -1585,7 +1585,7 @@
                 `;
             } else if (slideData.type === 'diagram') {
                 const diagramContent = slideData.image ? `
-                    <img src="${slideData.image}" class="max-w-full max-h-[65vh] object-contain relative z-20" style="filter: invert(1) brightness(1.2); opacity: 0.9;">
+                    <img src="${slideData.image}" class="max-w-full max-h-[78vh] object-contain relative z-20" style="filter: invert(1) brightness(1.2); opacity: 0.9;">
                 ` : `
                     <div class="text-gray-500 mono text-sm relative z-20 flex flex-col items-center">
                         <span class="material-symbols-outlined text-6xl mb-4">architecture</span>
@@ -1595,11 +1595,11 @@
 
                 return `
                     <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none"></div>
-                        <div class="z-10 w-full max-w-7xl flex flex-col">
-                            <div class="flex justify-between items-end border-b border-white pb-4 mb-8 slide-header">
+                        <div class="z-10 w-full max-w-[95%] flex flex-col">
+                            <div class="flex justify-between items-end border-b border-white pb-2 mb-4 slide-header">
                                 <h2 class="text-5xl font-bold uppercase tracking-tight">${slideData.title}</h2>
                             </div>
-                            <div class="diagram-box flex-grow w-full relative flex items-center justify-center p-8 bg-black bg-opacity-50 diagram-area">
+                            <div class="diagram-box flex-grow w-full relative flex items-center justify-center p-4 bg-black bg-opacity-50 diagram-area">
                             <!-- Architectural grid lines -->
                                 <div class="absolute inset-0" style="background-image: linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px); background-size: 50px 50px; opacity: 0.3;"></div>
 
